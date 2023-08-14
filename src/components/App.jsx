@@ -9,7 +9,6 @@ export class App extends Component {
     query: '',
     page: 1,
     hits: [],
-    total: 100,
   };
   async componentDidUpdate(prevProps, prevState) {
     if (prevState.query === this.state.query || prevState.query === '') {
