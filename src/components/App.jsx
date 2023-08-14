@@ -14,7 +14,7 @@ export class App extends Component {
     if (prevState.query === this.state.query || prevState.query === '') {
       return;
     }
-    const { hits, total } = await ImageService.getApi({
+    const { hits } = await ImageService.getApi({
       page: this.state.page,
       query: this.state.query,
     });
