@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
-const modalRoot = document.querySelector('#modal-root');
+const modalRoot = document.querySelector('#modal_root');
 export default class Modal extends Component {
   componentDidMount() {
     window.addEventListener('keydown', this.heandleKayDown);
