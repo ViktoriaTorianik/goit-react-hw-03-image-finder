@@ -19,7 +19,6 @@ export class App extends Component {
     showModal: false,
     src: null,
     alt: null,
-    showModal: false,
   };
   getNormalazedImages = arrey =>
     arrey.map(({ id, webformatURL, largeImageURL, tags }) => ({
