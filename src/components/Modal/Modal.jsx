@@ -26,6 +26,8 @@ export default class Modal extends Component {
             src={this.props.src}
             alt={this.props}
             onClick={this.props.onClick}
+            width="700"
+            height="700"
           />
         </div>
       </div>,

@@ -42,7 +42,7 @@ export class App extends Component {
         query: this.state.query,
       });
       if (hits.length === 0) {
-        toast.warn('По цьому запиту нфчого не знайдено', {
+        toast.warn('По цьому запиту нічого не знайдено', {
           position: 'top-center',
           autoClose: 5000,
           hideProgressBar: false,
@@ -92,7 +92,7 @@ export class App extends Component {
           <Modal onClick={this.handlModalClose} src={src} tags={alt} />
         )}
 
-        <ToastContainer position="top-center" theme="dark" />
+        <ToastContainer position="top-center" theme="dark" autoClose={2000} />
       </div>
     );
   }
