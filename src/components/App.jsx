@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Modal from './Modal/Modal';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
@@ -18,6 +19,7 @@ export class App extends Component {
     showModal: false,
     src: null,
     alt: null,
+    showModal: false,
   };
   getNormalazedImages = arrey =>
     arrey.map(({ id, webformatURL, largeImageURL, tags }) => ({
@@ -40,6 +42,18 @@ export class App extends Component {
         page: this.state.page,
         query: this.state.query,
       });
+      if (hits.length === 0) {
+        toast.warn('По цьому запиту нфчого не знайдено', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+      }
       this.setState(prev => ({
         hits: [...prev.hits, ...this.getNormalazedImages(hits)],
         lastPage: this.state.page >= Math.ceil(total / 12),
