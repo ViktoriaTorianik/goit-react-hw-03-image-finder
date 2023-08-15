@@ -1,9 +1,11 @@
 import { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
+import Modal from './Modal/Modal';
+import { ImageGallery } from './ImageGallery/ImageGallery';
+import Button from './Button/Button';
 import Searchbar from './Searchbar/Searchbar';
 import Dna from './Loader/Loader';
 
-// import ImageGallery from './ImageGallery/ImageGallery';
 import * as ImageService from 'service/getApi';
 
 export class App extends Component {
@@ -13,6 +15,9 @@ export class App extends Component {
     hits: [],
     lastPage: true,
     isloading: false,
+    showModal: false,
+    src: null,
+    alt: null,
   };
   getNormalazedImages = arrey =>
     arrey.map(({ id, webformatURL, largeImageURL, tags }) => ({
@@ -47,29 +52,33 @@ export class App extends Component {
   }
 
   handleFormSubmit = query => {
-    this.setState({ query });
+    this.setState({ query, page: 1, hits: [] });
   };
   handlLoadeMore = e => {
     this.setState(prev => ({ page: prev.page + 1 }));
   };
+  handleImageClick = (largeImageURL, tags) => {
+    this.setState({ src: largeImageURL, alt: tags, showModal: true });
+  };
+  handlModalClose = () => {
+    this.setState({ showModal: false });
+  };
+  handleClick = () => {
+    this.setState(prev => ({ page: prev.page + 1 }));
+  };
   render() {
-    const { hits, lastPage, isloading } = this.state;
+    const { hits, lastPage, isloading, alt, src, showModal } = this.state;
     return (
-      <div>
+      <div className="App">
         <Searchbar onSubmit={this.handleFormSubmit} />
         {isloading && <Dna />}
-        {hits.length !== 0 && (
-          <ul class="gallery">
-            {hits.map(({ id, webformatURL, largeImageURL, tags }) => {
-              return (
-                <li class="gallery-item" key={id}>
-                  <img src={webformatURL} alt={tags} />
-                </li>
-              );
-            })}
-          </ul>
+
+        <ImageGallery hits={hits} onClick={this.handleImageClick} />
+        {!lastPage && <Button onClick={this.handleClick} />}
+        {showModal && (
+          <Modal onClick={this.handlModalClose} src={src} tags={alt} />
         )}
-        {!lastPage && <button onClick={this.handlLoadeMore}>Loade more</button>}
+
         <ToastContainer position="top-center" theme="dark" />
       </div>
     );
